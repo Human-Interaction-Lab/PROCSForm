@@ -1,9 +1,19 @@
 import { useState } from 'react';
 import PROCSForm from './components/PROCSForm';
+import ListenerForm from './components/ListenerForm';
+import RoleSelection from './components/RoleSelection';
 
 const App = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [userId, setUserId] = useState('');
+  const [selectedRole, setSelectedRole] = useState(null);
+  const [directoryHandle, setDirectoryHandle] = useState(null);
+
+  const handleRoleSelect = (role, newUserId, dirHandle) => {
+    setSelectedRole(role);
+    setUserId(newUserId);
+    setDirectoryHandle(dirHandle);
+  };
 
   const handleComplete = (newUserId) => {
     setUserId(newUserId);
@@ -14,7 +24,13 @@ const App = () => {
     <div className="min-h-screen bg-white">
       <div className="max-w-6xl mx-auto pt-8">
         {!isComplete ? (
-          <PROCSForm onComplete={handleComplete} />
+          !selectedRole ? (
+            <RoleSelection onRoleSelect={handleRoleSelect} />
+          ) : selectedRole === 'speaker' ? (
+            <PROCSForm onComplete={handleComplete} directoryHandle={directoryHandle} userId={userId} />
+          ) : (
+            <ListenerForm onComplete={handleComplete} directoryHandle={directoryHandle} userId={userId} />
+          )
         ) : (
           <div className="max-w-2xl mx-auto p-6 space-y-6">
             <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded">
@@ -26,6 +42,8 @@ const App = () => {
               onClick={() => {
                 setIsComplete(false);
                 setUserId('');
+                setSelectedRole(null);
+                setDirectoryHandle(null);
               }}
               className="w-full py-2 px-4 bg-navy-800 text-white rounded hover:bg-navy-900"
             >

@@ -11,8 +11,8 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto pt-8">
+    <div className="min-h-screen bg-white">
+      <div className="max-w-6xl mx-auto pt-8">
         {!isComplete ? (
           <PROCSForm onComplete={handleComplete} />
         ) : (
@@ -27,9 +27,9 @@ const App = () => {
                 setIsComplete(false);
                 setUserId('');
               }}
-              className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="w-full py-2 px-4 bg-navy-800 text-white rounded hover:bg-navy-900"
             >
-              Complete Another Assessment
+              Complete Another Questionnaire
             </button>
           </div>
         )}

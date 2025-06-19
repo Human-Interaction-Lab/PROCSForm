@@ -147,27 +147,52 @@ const PROCSForm = ({ onComplete, directoryHandle: initialDirectoryHandle }) => {
     { value: 'strongly_agree', label: 'Strongly Agree' }
   ];
 
-  const renderPROCSQuestion = (question, index) => (
-    <div key={question.id} className="space-y-3 p-4 bg-white rounded-lg border">
-      <h3 className="font-medium text-gray-900">
-        {index + 1}. {question.text}
-      </h3>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-        {responseOptions.map(option => (
-          <label key={option.value} className="flex items-center space-x-2 cursor-pointer">
-            <input
-              type="radio"
-              name={question.id}
-              value={option.value}
-              checked={formData[question.id] === option.value}
-              onChange={handleInputChange}
-              required
-              className="form-radio text-blue-600"
-            />
-            <span className="text-sm text-gray-700">{option.label}</span>
-          </label>
-        ))}
-      </div>
+  const renderMatrixForm = () => (
+    <div className="bg-white rounded-lg border overflow-x-auto">
+      <table className="w-full">
+        <thead>
+          <tr className="bg-navy-800">
+            <th className="text-left p-4 font-medium text-white w-1/2 bg-navy-800">Question</th>
+            {responseOptions.map(option => (
+              <th key={option.value} className="text-center p-4 font-medium text-white min-w-[120px] bg-navy-800">
+                <div className="text-xs leading-tight">{option.label}</div>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {procsQuestions.map((question, index) => (
+            <tr key={question.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-25'}>
+              <td className="p-4 border-r border-gray-200">
+                <div className="font-medium text-gray-900 text-sm">
+                  {index + 1}. {(() => {
+                    const [beforeEllipsis, afterEllipsis] = question.text.split('...');
+                    return (
+                      <>
+                        {beforeEllipsis}...{' '}
+                        <strong>{afterEllipsis.trim()}</strong>
+                      </>
+                    );
+                  })()}
+                </div>
+              </td>
+              {responseOptions.map(option => (
+                <td key={option.value} className="p-4 text-center border-r border-gray-200 last:border-r-0">
+                  <input
+                    type="radio"
+                    name={question.id}
+                    value={option.value}
+                    checked={formData[question.id] === option.value}
+                    onChange={handleInputChange}
+                    required
+                    className="form-radio text-navy-600 w-4 h-4"
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 
@@ -233,7 +258,7 @@ const PROCSForm = ({ onComplete, directoryHandle: initialDirectoryHandle }) => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="w-full py-2 px-4 bg-navy-800 text-white rounded hover:bg-navy-900"
           >
             Continue
           </button>
@@ -243,8 +268,8 @@ const PROCSForm = ({ onComplete, directoryHandle: initialDirectoryHandle }) => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <h1 className="text-2xl font-bold mb-6">PROCS Assessment</h1>
+    <div className="max-w-6xl mx-auto p-6 space-y-6">
+      <h1 className="text-2xl font-bold mb-6">PROCS Questionnaire</h1>
 
       {error && (
         <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded">
@@ -302,21 +327,18 @@ const PROCSForm = ({ onComplete, directoryHandle: initialDirectoryHandle }) => {
 
       {/* PROCS Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-blue-50 p-6 rounded-lg">
-          <h2 className="text-xl font-bold mb-4">Communication Participation Assessment</h2>
+        <div className="bg-gray-100 p-6 rounded-lg">
+          <h2 className="text-xl font-bold mb-4">Questionnaire</h2>
           <p className="text-sm text-gray-700 mb-6">
-            Please rate how much you agree or disagree with each statement about your conversations.
-            Think about your typical conversations and experiences.
+            Please rate how much you agree or disagree with each statement about your conversation.
           </p>
-          
-          <div className="space-y-6">
-            {procsQuestions.map((question, index) => renderPROCSQuestion(question, index))}
-          </div>
+
+          {renderMatrixForm()}
         </div>
 
         <button
           type="submit"
-          className="w-full py-3 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 font-medium"
+          className="w-full py-3 px-4 bg-navy-800 text-white rounded hover:bg-navy-900 font-medium"
         >
           Save PROCS Responses
         </button>

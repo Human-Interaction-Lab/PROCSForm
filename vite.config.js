@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: 'https://human-interaction-lab.github.io/audio-recorder/',
+  base: 'https://human-interaction-lab.github.io/PROCSForm/',
   build: {
     outDir: 'docs'
   },

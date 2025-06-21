@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PROCSForm from './components/PROCSForm';
 import ListenerForm from './components/ListenerForm';
+import GeneralForm from './components/GeneralForm';
 import RoleSelection from './components/RoleSelection';
 
 const App = () => {
@@ -28,8 +29,10 @@ const App = () => {
             <RoleSelection onRoleSelect={handleRoleSelect} />
           ) : selectedRole === 'speaker' ? (
             <PROCSForm onComplete={handleComplete} directoryHandle={directoryHandle} userId={userId} />
-          ) : (
+          ) : selectedRole === 'listener' ? (
             <ListenerForm onComplete={handleComplete} directoryHandle={directoryHandle} userId={userId} />
+          ) : (
+            <GeneralForm onComplete={handleComplete} directoryHandle={directoryHandle} userId={userId} />
           )
         ) : (
           <div className="max-w-2xl mx-auto p-6 space-y-6">

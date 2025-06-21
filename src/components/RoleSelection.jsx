@@ -100,6 +100,20 @@ const RoleSelection = ({ onRoleSelect, directoryHandle: initialDirectoryHandle }
           </div>
         </div>
 
+        {/* General Form Button */}
+        <div className="space-y-4">
+          <button
+            onClick={() => handleRoleSelection('general')}
+            className="w-full p-6 text-white rounded-lg hover:opacity-90 transition-colors"
+            style={{ backgroundColor: '#7b241c' }}
+          >
+            <h3 className="text-xl font-semibold mb-2">General Communication Assessment</h3>
+            <p className="text-sm opacity-90">
+              Rate your communication in this conversation
+            </p>
+          </button>
+        </div>
+
         {/* Role Selection */}
         <div className="space-y-4">
           <h2 className="text-lg font-medium">Select your role:</h2>
